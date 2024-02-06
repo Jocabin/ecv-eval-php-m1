@@ -1,12 +1,12 @@
 <?php
-//require_once(dirname(__FILE__) . '/../models/Author.php');
+// Si l'utilisateur est déjà connecté, on le redirige vers la liste des commandes
+if (session_id() || $_COOKIE['PHPSESSID']) {
+    header('Location: order/index.php');
+}
 ?>
 
-<html lang="fr">
-<head>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
+<?php require 'parts/layoutBefore.php' ?>
+
 <form action="handlers/loginHandler.php" method="POST">
     <label for="email">
         Email
@@ -22,6 +22,4 @@
     <a href="register.php">Inscription</a>
 </form>
 
-</body>
-</html>
-
+<?php require 'parts/layoutAfter.php' ?>

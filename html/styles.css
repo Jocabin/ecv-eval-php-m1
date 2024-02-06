@@ -18,3 +18,18 @@ label {
 form {
     margin: auto;
 }
+
+.menuNav {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    background-color: darkred;
+    padding: .5rem 1rem;
+}
+
+.menuNav a {
+    color: white;
+    font-size: 1.2rem;
+}

@@ -1,11 +1,5 @@
-<?php
-?>
+<?php require 'parts/layoutBefore.php' ?>
 
-<html lang="fr">
-<head>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
 <form action="handlers/registerHandler.php" method="POST">
     <h1>Inscription</h1>
     <label for="pseudo">
@@ -31,5 +25,5 @@
     <button>Créer un compte</button>
     <a href="index.php">Retour à l'accueil</a>
 </form>
-</body>
-</html>
+
+<?php require 'parts/layoutAfter.php' ?>
