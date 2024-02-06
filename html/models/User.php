@@ -73,7 +73,7 @@ class User
             global $dsn, $db_user, $db_pass;
             $dbh = new PDO($dsn, $db_user, $db_pass);
 
-            $stmt = $dbh->prepare("SELECT * FROM user WHERE email = :email;");
+            $stmt = $dbh->prepare("SELECT * FROM users WHERE email = :email;");
 
             $stmt->bindParam(':email', $email);
             $stmt->execute();
