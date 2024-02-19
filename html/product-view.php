@@ -1,6 +1,7 @@
 <?php
 require_once(dirname(__FILE__) . '/models/Product.php');
 
+//on récupère l'ID du produit passé par paramètres dans l'URL, puis on récupère le produit associé
 $productId = $_GET['id'];
 $product = Product::get($productId);
 ?>

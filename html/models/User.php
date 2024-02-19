@@ -8,7 +8,8 @@ class User
     private string $email;
     private string $password;
 
-    public function __construct($id = null, $username = null, $email = null, $password = null) {
+    public function __construct($id = null, $username = null, $email = null, $password = null)
+    {
         if (!empty($username)) {
             $this->setUsername($username);
         }
@@ -80,7 +81,8 @@ class User
         return $stmt->execute();
     }
 
-    public static function get($userId) {
+    public static function get($userId)
+    {
         try {
             global $dsn, $db_user, $db_pass;
             $dbh = new PDO($dsn, $db_user, $db_pass);
@@ -102,6 +104,7 @@ class User
             global $dsn, $db_user, $db_pass;
             $dbh = new PDO($dsn, $db_user, $db_pass);
 
+//            on récupère les infos du client via son mail
             $stmt = $dbh->prepare("SELECT * FROM users WHERE email = :email;");
 
             $stmt->bindParam(':email', $email);
@@ -110,7 +113,9 @@ class User
             $userInfos = $stmt->fetch();
             $hashedPassword = $userInfos['password'];
 
+//            on vérifie que le mot de passe renseigné lors de la connexion est valide par rapport au hash enregistré dans la BDD
             if (password_verify($password, $hashedPassword)) {
+//                si oui, on retourne un objet User avec les infos de l'utilisateur
                 return new User($userInfos['id'], $userInfos['username'], $userInfos['email'], $userInfos['password']);
             }
 

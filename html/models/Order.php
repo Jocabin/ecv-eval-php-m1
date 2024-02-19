@@ -8,7 +8,8 @@ class Order
     private int $userId;
     private float $total;
 
-    public function __construct($item = null) {
+    public function __construct($item = null)
+    {
         if (isset($item)) {
             $this->id = $item['id'];
             $this->productId = $item['product_id'];
@@ -78,17 +79,22 @@ class Order
         }
     }
 
-    public static function getList($userId): array {
+    public static function getList($userId): array
+    {
         try {
+//            on récupère les infos de connexion à la BDD
             global $dsn, $db_user, $db_pass;
             $dbh = new PDO($dsn, $db_user, $db_pass);
 
+//            on prépare la requête SQL, en lui passant les paramères nécésaires
             $stmt = $dbh->prepare("SELECT * FROM orders where user_id = :user_id;");
             $stmt->bindParam(':user_id', $userId);
 
+//            on éxécute la requête
             $stmt->execute();
             $resultArray = $stmt->fetchAll();
 
+//            pour chaque ligne retournée par la requête SQL, on crée un objet Order et on lui assigne les informations
             return array_map(function ($item) {
                 return new Order($item);
             }, $resultArray);

@@ -9,6 +9,7 @@ $productsList = Product::getList();
 <h1>Liste des produits</h1>
 
 <ul>
+<!--    on affiche la liste des produits-->
     <?php foreach ($productsList as $product): ?>
         <li>
             <a class="item" href="product-view.php?id=<?= $product->getId() ?>">

@@ -1,5 +1,5 @@
 <?php
-// Si l'utilisateur essaie d'accéder à des pages sans être connecté, il est redirigé
+// Si l'utilisateur essaie d'accéder à d'autres pages que l'inscription/la connexion sans être connecté, il est redirigé
 if ($_SERVER['REQUEST_URI'] !== '/' && $_SERVER['REQUEST_URI'] !== '/register.php') {
     session_start();
 
@@ -15,6 +15,7 @@ if ($_SERVER['REQUEST_URI'] !== '/' && $_SERVER['REQUEST_URI'] !== '/register.ph
 </head>
 <body>
 
+<!--    on affiche le menu de navigation que pour les clients connectés-->
 <?php if (isset($_SESSION['userId'])) : ?>
 
 <nav class="menuNav">

@@ -6,6 +6,7 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
     exit();
 }
 
+// on récupère les infos de création de compte, et on filtre les les caractères spéciaux
 $username = filter_var($_POST["pseudo"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 $email = filter_var($_POST["email"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 $password = filter_var($_POST["password"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -21,6 +22,7 @@ if ($password !== $confirmPassword) {
     exit();
 }
 
+// on crée un object User, on lui passe les informations et on enregistre le client dans la BDD
 $userAccount = new User();
 $result = $userAccount
     ->setUsername($username)
