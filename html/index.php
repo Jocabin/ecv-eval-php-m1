@@ -1,7 +1,8 @@
 <?php
-// Si l'utilisateur est déjà connecté, on le redirige vers la liste des commandes
-if (session_id() || $_COOKIE['PHPSESSID']) {
-    header('Location: order/index.php');
+session_start();
+
+if (isset($_SESSION['userId'])) {
+    header('Location: orders-list.php');
 }
 ?>
 
@@ -19,7 +20,7 @@ if (session_id() || $_COOKIE['PHPSESSID']) {
     </label>
 
     <button>Se connecter</button>
-    <a href="register.php">Inscription</a>
+    <a href="./register.php">Inscription</a>
 </form>
 
 <?php require 'parts/layoutAfter.php' ?>

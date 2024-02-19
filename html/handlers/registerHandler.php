@@ -28,7 +28,4 @@ $result = $userAccount
     ->setPassword($password)
     ->save();
 
-// todo to show
-echo 'Inscription réussie. Veuillez maintenant vous connecter';
-header("Location: ../index.php");
-?>
+header("Location: ../orders-list.php");

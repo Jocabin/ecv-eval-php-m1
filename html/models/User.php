@@ -3,11 +3,12 @@ require_once dirname(__FILE__) . '/../bdd/db.php';
 
 class User
 {
+    private int $id;
     private string $username;
     private string $email;
     private string $password;
 
-    public function __construct($username = null, $email = null, $password = null) {
+    public function __construct($id = null, $username = null, $email = null, $password = null) {
         if (!empty($username)) {
             $this->setUsername($username);
         }
@@ -16,6 +17,9 @@ class User
         }
         if (!empty($password)) {
             $this->setPassword($password);
+        }
+        if (!empty($id)) {
+            $this->setId($id);
         }
     }
 
@@ -52,19 +56,44 @@ class User
         return $this;
     }
 
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
     public function save(): bool
     {
         global $dsn, $db_user, $db_pass;
         $dbh = new PDO($dsn, $db_user, $db_pass);
 
-        $stmt = $dbh->prepare("INSERT INTO user (username, email, password) VALUES (:username, :email, :password)");
+        $stmt = $dbh->prepare("INSERT INTO users (username, email, password) VALUES (:username, :email, :password)");
 
         $stmt->bindParam(':username', $this->username);
         $stmt->bindParam(':email', $this->email);
         $stmt->bindParam(':password', $this->password);
 
         return $stmt->execute();
-//        todo return error messages to front end
+    }
+
+    public static function get($userId) {
+        try {
+            global $dsn, $db_user, $db_pass;
+            $dbh = new PDO($dsn, $db_user, $db_pass);
+
+            $stmt = $dbh->prepare("SELECT * FROM users WHERE id = :id;");
+
+            $stmt->bindParam(':id', $userId);
+            $stmt->execute();
+
+            return $stmt->fetch();
+        } catch (PDOException $e) {
+            throw new Error($e);
+        }
     }
 
     public static function verifyPassword($email, $password): bool|User
@@ -82,7 +111,7 @@ class User
             $hashedPassword = $userInfos['password'];
 
             if (password_verify($password, $hashedPassword)) {
-                return true;
+                return new User($userInfos['id'], $userInfos['username'], $userInfos['email'], $userInfos['password']);
             }
 
             return false;

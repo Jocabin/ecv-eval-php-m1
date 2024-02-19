@@ -1,8 +1,6 @@
 <?php
 require_once(dirname(__FILE__) . '/../models/User.php');
 
-session_start();
-
 if ($_SERVER["REQUEST_METHOD"] != "POST") {
     echo 'Il faut envoyer des données en POST';
     exit();
@@ -16,12 +14,14 @@ if (empty($email) || empty($password)) {
     exit();
 }
 
-if (User::verifyPassword($email, $password) === false) {
+$user = User::verifyPassword($email, $password);
+
+if ($user === false) {
     echo 'Erreur: Identifiants incorrects !';
     exit();
 }
 
-// todo to show
-echo 'Connexion réussie.';
-header("Location: ../order/index.php");
-?>
+session_start();
+$_SESSION['userId'] = $user->getId();
+
+header("Location: ../orders-list.php");
